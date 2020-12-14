@@ -141,8 +141,6 @@ class GameWindow(arcade.Window):
             self.ball_speed_y *= -1
             arcade.play_sound(self.bounce_sound)
 
-        # player stops at the top and the bottom of the screen
-
         # player 1 moving
         if self.up_player1:
             self.player1_y += self.player1_speed * delta_time
@@ -178,14 +176,12 @@ class GameWindow(arcade.Window):
             if self.player1_y - 75 < self.ball_y < self.player1_y + 75:
                 self.ball_speed_x *= -1
                 arcade.play_sound(self.collision_sound)
-                # print("Collision")
 
         # collision between the player 2 and the ball
         if 1170 < self.ball_x < 1175:
             if self.player2_y - 75 < self.ball_y < self.player2_y + 75:
                 self.ball_speed_x *= -1
                 arcade.play_sound(self.collision_sound)
-                # print("Collision")
 
         # player collision with border
         if self.player1_y > 960 - 75 - 25:
