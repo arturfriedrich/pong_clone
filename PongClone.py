@@ -14,7 +14,7 @@ class GameWindow(arcade.Window):
         self.score_display_player1_color, self.score_display_player2_color = arcade.color.BLACK, arcade.color.BLACK
 
         self.start_color = arcade.color.WHITE
-        self.start_screen_x = 320
+        self.start_screen_x = 640
 
         # ball starting positions
         self.ball_x = 640
@@ -63,7 +63,7 @@ class GameWindow(arcade.Window):
         arcade.draw_rectangle_filled(self.player2_x, self.player2_y, 20, 150, self.player2_color)
 
         # ball
-        arcade.draw_circle_filled(self.ball_x, self.ball_y, 10, self.ball_color)
+        arcade.draw_rectangle_filled(self.ball_x, self.ball_y, 20, 20, self.ball_color)
 
         #  visible borders
         arcade.draw_rectangle_filled(640, 960 - 25 / 2, 1280, 25, arcade.color.GRAY)
@@ -71,13 +71,13 @@ class GameWindow(arcade.Window):
 
         # score display
         arcade.draw_text(str(self.player1_score), self.score_display_player1_x, self.score_display_player1_y,
-                         self.score_display_player1_color, 72)
+                         self.score_display_player1_color, font_size=72, font_name="connection.otf", anchor_x="center", anchor_y="center")
         arcade.draw_text(str(self.player2_score), self.score_display_player2_x, self.score_display_player2_y,
-                         self.score_display_player2_color, 72)
+                         self.score_display_player2_color, font_size=72, font_name="connection.otf", anchor_x="center", anchor_y="center")
 
         # win text display
         if self.player1_score >= 7:
-            arcade.draw_text("PLAYER 1 WON!", 400, 460, arcade.color.WHITE, 60, align="center", bold=True)
+            arcade.draw_text("PLAYER 1 WON!", 640, 460, arcade.color.WHITE, font_size=60, font_name="connection.otf", anchor_x="center", anchor_y="center")
 
             # clear the players
             self.player1_x = 0 - 100
@@ -92,7 +92,7 @@ class GameWindow(arcade.Window):
             self.score_display_player2_x = 0 - 200
 
         if self.player2_score >= 7:
-            arcade.draw_text("PLAYER 2 WON!", 400, 460, arcade.color.WHITE, 60, align="center", bold=True)
+            arcade.draw_text("PLAYER 2 WON!", 640, 460, arcade.color.WHITE, font_size=60, font_name="connection.otf", anchor_x="center", anchor_y="center")
 
             # clear the players
             self.player1_x = 0 - 100
@@ -106,7 +106,7 @@ class GameWindow(arcade.Window):
             self.score_display_player1_x = 0 - 200
             self.score_display_player2_x = 0 - 200
 
-        arcade.draw_text("Press SPACE to start!", self.start_screen_x, 460, self.start_color, 60, align="center", bold=True)
+        arcade.draw_text("Press SPACE to start!", self.start_screen_x, 460, self.start_color, font_size=60, font_name="connection.otf", anchor_x="center", anchor_y="center")
         if self.space == 1:
             self.player1_color, self.player2_color = arcade.color.WHITE, arcade.color.WHITE
 
@@ -140,6 +140,8 @@ class GameWindow(arcade.Window):
             self.ball_y = 0 + 35
             self.ball_speed_y *= -1
             arcade.play_sound(self.bounce_sound)
+
+        # player stops at the top and the bottom of the screen
 
         # player 1 moving
         if self.up_player1:
@@ -176,12 +178,14 @@ class GameWindow(arcade.Window):
             if self.player1_y - 75 < self.ball_y < self.player1_y + 75:
                 self.ball_speed_x *= -1
                 arcade.play_sound(self.collision_sound)
+                # print("Collision")
 
         # collision between the player 2 and the ball
         if 1170 < self.ball_x < 1175:
             if self.player2_y - 75 < self.ball_y < self.player2_y + 75:
                 self.ball_speed_x *= -1
                 arcade.play_sound(self.collision_sound)
+                # print("Collision")
 
         # player collision with border
         if self.player1_y > 960 - 75 - 25:
